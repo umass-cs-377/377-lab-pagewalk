@@ -15,6 +15,10 @@
 #define PTE_MASK  0x0C // 00001100b
 #define PAGE_MASK 0x03 // 00000011b
 
+#define PGD_SHIFT 6
+#define PMD_SHIFT 4
+#define PTE_SHIFT 2
+
 using namespace std; 
 
 unsigned int mem[64];
@@ -37,7 +41,7 @@ int virt_to_pgd(int pfn, uint8_t vaddr){
     *       XX000000b. 
     *    2) bitshift the 2 MSB by 6 to get (000000XX)b
     */
-   int offset = (vaddr & PGD_MASK) >> 6;
+   int offset = (vaddr & PGD_MASK) >> PGD_SHIFT;
 
    /**
     * Now that we have the offset, we can retrieve the PMD by calling the 

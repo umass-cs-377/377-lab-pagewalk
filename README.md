@@ -39,17 +39,17 @@ The PGD is the entry point for every virtual to physical translation. When a pro
 The PMD is the second level of the indirection. This has the same structure as the PGD, but (in our example) consists of at most 4 different pages. The address of each of these pages is stored in the PGD entries. Each value in the PMD stores the address of the next-level PTE.
 
 ##### PTE (Page Table Entry)
-The PTE is another level of indirection. Each value in PTE stores a physical address of a virtual address.
+The PTE is the lowest level of indirection. Each value in PTE stores a physical address of a virtual address.
 
-### Performe a Page Walk
+### Perform a Page Walk
 ##### PGD Offset
-Say you are given a virtual address with a binary representation `01111011`; the two MSB gives the offset in the PGD. To get the offset, we first need to mask out (set to 0) all but the 2 MSB by binary AND `01111011 & 11000000` to get `01000000`. Next, we need to bitshift the virtual address to get `00000001`, which gives the offset in the PGD. Looking at the entry, we get the address of PMD. 
+Say you are given a virtual address with a binary representation `01111011`; two most significant bits (MSB) gives the offset in the PGD. To get the offset, we first need to mask out (set to 0) all but the 2 MSB by binary `AND` the address with the mask like: `01111011 & 11000000` to get `01000000`. Next, we need to bitshift the virtual address to get `00000001`, which gives the offset in the PGD. Looking at the entry, we get the address of PMD. 
 
 ##### Validating the PMD
-In order to check if the PMD is valid, we need to look a the LSB. If the value is `0`, that means the table isn't used yet, so the program tried to access an invalid address. However, if the value is `1`, that means the PMD is valid. To get the address of the PMD, we look at the 6 MSB. Remember, indexing the memory by pages needs $2^6$ bits.
+In order to check if the PMD is valid, we need to look at the least significant bit (LSB). If the value is `0`, that means the table isn't used yet, so the program tried to access an invalid address. However, if the value is `1`, that means the PMD is valid. To get the address of the PMD, we look at the 6 MSB. Remember, indexing the memory by pages needs $2^6$ bits.
 
 
-We repeat the proccess for the other levels. 
+We repeat the process for the other levels for the PMD, but this time we need to get the offset from the bits `5,6` (i.e., `01111011 & 00110000`). This pattern is similar when accessing the offset in the PTE. 
 
 ```cpp
 #include <stdlib.h>    //Required for malloc, free
