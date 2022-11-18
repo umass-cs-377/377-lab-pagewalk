@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This exercise is designed to cover various aspects of memory in C/C++: the `malloc` and `free` functions, pointers, and how to manipulate memory. Please make sure that all of your answers to questions in these exercises come from work done on the Edlab environment – otherwise, they may be inconsistent results and will not receive points. Please read through this document and follow the instructions. After you do that, visit Gradescope and complete the questions associated with this exercise by the assigned due date.
+This exercise is designed to cover how to perform a page walk.
 
 ## Setup
 
