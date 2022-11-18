@@ -167,7 +167,7 @@ void page_walk(uint8_t vaddr){
    // 4) get the value at that location
    int val = virt_to_phys(phs, vaddr);
 
-   cout << "\tPAGE WALK COMPLETED: vlaue stored=" << val << endl;
+   cout << "\tPAGE WALK COMPLETED: value stored=" << val << endl;
    return; 
 }
 
