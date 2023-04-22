@@ -24,7 +24,7 @@ This repository includes a `Makefile` that allows you to locally compile and run
 
 In this assignment, you are asked to implement a simple `page walk` simulation. A `page walk` refers to the process of translating the virtual address to the physical address. 
 
-Let's start by describing the memory we have to work with. In this example, we have a very small memory space of $2^8 = 256$ bytes (recall, a byte is 8 bits). We divide the address space into $2^2 = 4$ chunks called pages. In total, we have $\frac{2^8}{2^2} = 2^6 = 64$ pages in our memory. For this lab, we will use 3-level page tables. 
+Let's start by describing the memory we have to work with. In this example, we have a very small memory space of $2^8 = 256$ bytes (recall, a byte is 8 bits). We divide the address space into $2^2 = 4$ chunks called pages. In total, we have $\frac{2^8}{2^2} = 2^6 = 64$ pages in our memory. For this lab, we will use 3-level paging scheme. 
 
 
 ### Terminology 
@@ -33,10 +33,10 @@ Throughout the lab, you'll see the terms `MSB` and `LSB`. `MSB` stands for `Most
 For the rest of the page table, we used the Terminology used in the GNU/Linx. 
 
 ##### PGD (Page Global Directory)
-The PGD is the entry point for every virtual to physical translation. When a program starts, the OS assigns it a PGD, and stores the address of the page into the register `cr3` register on x86. Each entry in the PGD provides the address of the next-level PMD.
+The PGD is the entry point for every virtual to physical translation. When a program starts, the OS assigns the process a PGD address, and stores the address of the page into the register `cr3` register on x86. Each entry in the PGD provides the staring address of the next-level called PMD.
 
 ##### PMD (Page Middle Directory)
-The PMD is the second level of the indirection. This has the same structure as the PGD, but (in our example) consists of at most 4 different pages. The address of each of these pages is stored in the PGD entries. Each value in the PMD stores the address of the next-level PTE.
+The PMD is the second level of the indirection. This has the same structure as the PGD, but (in our example) consists of at most 4 different pages. The addresses of each of these pages is stored in the PGD entries. Each value in the PMD stores the address of the next-level PTE.
 
 ##### PTE (Page Table Entry)
 The PTE is the lowest level of indirection. Each value in PTE stores a physical address of a virtual address.
