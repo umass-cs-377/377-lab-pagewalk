@@ -9,7 +9,7 @@ This exercise is designed to cover how to perform a page walk.
 Once you have logged in to Edlab, you can clone this repo using
 
 ```bash
-git clone https://github.com/umass-cs-377/F22-377-pagewalk.git
+git clone https://github.com/umass-cs-377/377-lab-pagewalk.git
 ```
 
 Then you can use `cd` to open the directory you just cloned:
