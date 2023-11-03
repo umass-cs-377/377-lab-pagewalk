@@ -1,4 +1,4 @@
-# COMPSCI 377 Exercise: Memory Allocation
+# COMPSCI 377 Exercise: Page Walk
 
 ## Purpose
 
