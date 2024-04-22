@@ -28,7 +28,7 @@ Let's start by describing the memory we have to work with. In this example, we h
 
 
 ### Terminology 
-Throughout the lab, you'll see the terms `MSB` and `LSB`. `MSB` stands for `Most Significant Bit(s)`. This is the leftmost bit(s). For example, the binary number `10000000` has an `MSB` of `1`. Similarly, `LBS` stands for `Least Significant Bit(s)`. For example, the binary number `00000001` has a `LBS` of `1`.
+Throughout the lab, you'll see the terms `MSB` and `LSB`. `MSB` stands for `Most Significant Bit(s)`. This is the leftmost bit(s). For example, the binary number `10000000` has an `MSB` of `1`. Similarly, `LSB` stands for `Least Significant Bit(s)`. For example, the binary number `00000001` has a `LSB` of `1`.
 
 For the rest of the page table, we used the Terminology used in the GNU/Linx. 
 
