@@ -42,11 +42,57 @@ The PMD is the second level of the indirection. This has the same structure as t
 The PTE is the lowest level of indirection. Each value in PTE stores a physical address of a virtual address.
 
 ### Perform a Page Walk
+
+##### Setup 
+```
+Virtual Address
+      ↓
+PGD  (Page Global Directory)
+      ↓
+PMD  (Page Middle Directory)
+      ↓
+PTE  (Page Table Entry)
+      ↓
+Physical Address
+      ↓
+Value stored in memory
+```
+
 ##### PGD Offset
-Say you are given a virtual address with a binary representation `01111011`; two most significant bits (MSB) gives the offset in the PGD. To get the offset, we first need to mask out (set to 0) all but the 2 MSB by binary `AND` the address with the mask like: `01111011 & 11000000` to get `01000000`. Next, we need to bitshift the virtual address to get `00000001`, which gives the offset in the PGD. Looking at the entry, we get the address of PMD. 
+Say you are given a virtual address with a binary representation `01111011`; 
+```
+[ PGD ][ PMD ][ PTE ][ OFFSET ]
+  01     11     10      11
+```
+two most significant bits (MSB) gives the offset in the PGD. 
+```
+                PGD page
+        ┌────────────────────────────────┐
+index 0 │ entry 0                        │
+index 1 │ entry 1 -> PMD page (00011001) │
+index 2 │ entry 2                        │
+index 3 │ entry 3                        │
+        └────────────────────────────────┘
+```
+
+To get the offset, we first need to mask out (set to 0) all but the 2 MSB by binary `AND` the address with the mask like: 
+```
+vaddr      = 01111011
+PGD_MASK   = 11000000
+--------------------
+result     = 01000000
+```
+Next, we need to bitshift the result to get `01000000 >> 6 = 00000001`, which gives the offset in the PGD. Looking at the entry, we get the address of PMD. 
 
 ##### Validating the PMD
-In order to check if the PMD is valid, we need to look at the least significant bit (LSB). If the value is `0`, that means the table isn't used yet, so the program tried to access an invalid address. However, if the value is `1`, that means the PMD is valid. To get the address of the PMD, we look at the 6 MSB. Remember, indexing the memory by pages needs $2^6$ bits.
+In order to check if the PMD `00011001` is valid, we need to look at the least significant bit (LSB). If the value is `0`, that means the table isn't used yet, so the program tried to access an invalid address. However, if the value is `1`, that means the PMD is valid. That is
+```
+entry 1    = 00011001
+PAGE_MASK  = 00000011
+--------------------
+result     = 00000001
+```
+To get the address of the PMD, we look at the 6 MSB. Remember, indexing the memory by pages needs $2^6$ bits.
 
 
 We repeat the process for the other levels for the PMD, but this time we need to get the offset from the bits `5,6` (i.e., `01111011 & 00110000`). This pattern is similar when accessing the offset in the PTE. 
